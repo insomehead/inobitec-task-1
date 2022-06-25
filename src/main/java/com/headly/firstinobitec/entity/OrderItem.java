@@ -1,15 +1,12 @@
 package com.headly.firstinobitec.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @Table(name = "order_item")
 public class OrderItem {
 
@@ -17,8 +14,8 @@ public class OrderItem {
     private Long id;
 
     @Column(name = "order_id")
-    private Long order_id;
+    private Long orderId;
 
     @Column(name = "item_name")
-    private String item_name;
+    private String itemName;
 }

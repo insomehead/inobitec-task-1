@@ -3,14 +3,20 @@ package com.headly.firstinobitec.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @Table(name = "order")
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, orderStatusId, customerName, customerPhone, customerComment, orderItemList);
+    }
+
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "order_status_id")
@@ -24,4 +30,6 @@ public class Order {
 
     @Column(name = "customer_comment")
     private String customerComment;
+
+    private List<OrderItem> orderItemList;
 }

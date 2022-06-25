@@ -1,6 +1,7 @@
 package com.headly.firstinobitec.mapper;
 
 import com.headly.firstinobitec.entity.Order;
+import com.headly.firstinobitec.entity.OrderItem;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -9,18 +10,34 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
 
-    @Select("SELECT * " +
-            "FROM \"order\" " +
+    @Select("SELECT id " +
+            "FROM \"order\"" +
             "WHERE id = #{id}")
-    Order findById(Long id);
+    Order existByID(Long id);
 
-    //сложна. нада думать
     @Select("SELECT * " +
-            "FROM \"order\" " +
-            "LEFT JOIN order_item on \"order\".id = order_item.order_id")
+            "FROM \"order\"" +
+            "WHERE id = #{id}")
     @Results(value = {
-            @Result(column = "order_id", property = "orderId"),
-            @Result(column = "item_name", property="itemName")
+            @Result(column = "id", property = "id"),
+            @Result(column = "order_status_id", property = "orderStatusId"),
+            @Result(column = "customer_name", property = "customerName"),
+            @Result(column = "customer_phone", property = "customerPhone"),
+            @Result(column = "customer_comment", property = "customerComment"),
+            @Result(column = "id", property = "orderItemList",
+                    javaType = List.class, many = @Many(
+                    select = "orderItemList"
+            ))
     })
-    List<Order> findAll();
+    Order orderList(Long id);
+
+    @Select("SELECT *" +
+            "FROM order_item " +
+            "WHERE order_id = #{orderId}")
+    @Results(value = {
+            @Result(column = "id", property = "id"),
+            @Result(column = "order_id", property = "orderId"),
+            @Result(column = "item_name", property = "itemName")
+    })
+    List<OrderItem> orderItemList(Long orderId);
 }

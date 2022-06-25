@@ -7,3 +7,7 @@ spring.datasource:
   url: jdbc:postgresql://localhost:5432/inobitec
   username: insomehead
   password: 3669
+
+spring:
+  flyway:
+    enabled: false
