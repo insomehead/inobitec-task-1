@@ -10,4 +10,4 @@ spring.datasource:
 
 spring:
   flyway:
-    enabled: false
+    enabled: true

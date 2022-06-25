@@ -14,19 +14,20 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     @Autowired
-    public OrderService(OrderMapper orderMapper){
+    public OrderService(OrderMapper orderMapper) {
         this.orderMapper = orderMapper;
     }
 
-    public Order findById(Long id){
-        return orderMapper.orderList(id);
+    public Order findById(Long id) {
+        return orderMapper.getOrderById(id);
     }
 
-    public boolean existById(Long id){
+    public boolean existById(Long id) {
         return orderMapper.existByID(id) != null;
     }
 
-    public List<OrderItem> list(Long orderId){
-        return orderMapper.orderItemList(orderId);
+    public void deleteById(Long id) {
+        orderMapper.deleteOrderById(id);
     }
+
 }
