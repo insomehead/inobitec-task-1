@@ -1,28 +1,20 @@
-package com.headly.firstinobitec.entity;
+package com.headly.firstinobitec.model;
 
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
-
 public class Order {
 
-
-    private Long id;
-
+    private Integer id;
 
     private Integer orderStatusId;
 
-
     private String customerName;
 
-
     private String customerPhone;
-
 
     private String customerComment;
 

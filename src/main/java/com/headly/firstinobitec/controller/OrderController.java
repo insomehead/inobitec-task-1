@@ -1,16 +1,11 @@
 package com.headly.firstinobitec.controller;
 
-import com.headly.firstinobitec.entity.Order;
+import com.headly.firstinobitec.model.Order;
 import com.headly.firstinobitec.service.OrderService;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class OrderController {
@@ -23,7 +18,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity<Order> findById(@PathVariable Long id) {
+    public ResponseEntity<Order> findById(@PathVariable Integer id) {
         if (!orderService.existById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -31,10 +26,29 @@ public class OrderController {
     }
 
     @DeleteMapping("/order/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
         if (!orderService.existById(id)) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        orderService.deleteById(id);        return new ResponseEntity<>(HttpStatus.OK);
+        orderService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/order")
+    public ResponseEntity<Void> insertOrder(@RequestBody Order order){
+        if (orderService.existById(order.getId())){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        orderService.insertOrder(order);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/order/{id}")
+    public ResponseEntity<Void> updateOrder(@PathVariable Integer id, @RequestBody Order order){
+        if (!orderService.existById(id)) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        orderService.updateOrder(id, order);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
